@@ -6,8 +6,6 @@ import android.app.NotificationManager
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SHORT_SERVICE
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED
 import android.os.Build
 import android.os.Handler
 import android.os.IBinder
@@ -26,8 +24,8 @@ class MyServices : Service() {
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channelId = "my_channel_1"
-            val channel = NotificationChannel(channelId, "Default", NotificationManager.IMPORTANCE_DEFAULT)
+            val channelId = "my_channel_11"
+            val channel = NotificationChannel(channelId, "Default", NotificationManager.IMPORTANCE_HIGH)
             val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             manager.createNotificationChannel(channel)
             val notification = Notification.Builder(this, channelId).apply {
@@ -35,9 +33,10 @@ class MyServices : Service() {
                 setContentText("This is content")
                 setSmallIcon(R.drawable.ic_launcher_foreground)
             }.build()
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-                startForeground(serviceId, notification, FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED)
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+//                startForeground(serviceId, notification, FOREGROUND_SERVICE_TYPE_SYSTEM_EXEMPTED)
+//            }
+            startForeground(serviceId, notification)
         }
 
     }
